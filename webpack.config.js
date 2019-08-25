@@ -20,7 +20,8 @@ module.exports = {
 	},
 	entry:        {
 		index:    `${ PATHS.src }/index.js`,
-		snippets: `${ PATHS.src }/snippets.js`
+		snippets: `${ PATHS.src }/snippets.js`,
+		rotate:   `${ PATHS.src }/rotate.js`
 	},
 	output:       {
 //    filename: `${PATHS.assets}js/[name].[hash].js`,
@@ -40,7 +41,7 @@ module.exports = {
 	},
 	optimization: {
 		minimizer:   [
-			new TerserPlugin({}),
+			new TerserPlugin( {} ),
 			new OptimizeCssAssetsPlugin( {} )
 		],
 		splitChunks: {
@@ -71,8 +72,17 @@ module.exports = {
 			myPageHeader: 'Hello Snippets',
 			template:     `${ PATHS.src }/snippets.html`,
 			chunks:       [ 'vendor', 'snippets' ],
-			filename:     'snippets.html', //relative to root of the application
-			inject:       true
+			filename:     'snippets.html' //relative to root of the application
+//			inject:       true
+		} ),
+		new HtmlWebpackPlugin( {
+			hash:         false,
+			title:        'my rotate page!',
+			myPageHeader: 'Hello Rotate',
+			template:     `${ PATHS.src }/rotate.html`,
+			chunks:       [ 'vendor', 'rotate' ],
+			filename:     'rotate.html' //relative to root of the application
+//			inject:       true
 		} ),
 		new MiniCssExtractPlugin( {
 			filename: `${ PATHS.assets }css/[name].[hash].css`
@@ -83,8 +93,8 @@ module.exports = {
 				to:   `${ PATHS.dist }/assets/img/[name].[ext]`
 			},
 			{
-				from: `${PATHS.src}/static`,
-				to: ``
+				from: `${ PATHS.src }/static`,
+				to:   ``
 			}
 		] ),
 		//для полного билда закоментировать нижний плагин
@@ -92,8 +102,8 @@ module.exports = {
 			filename: '[file].map'
 		} )
 	],
-	resolve: {
-		extensions: ['.js', '.ts']
+	resolve:      {
+		extensions: [ '.js', '.ts' ]
 	},
 	module:       {
 		rules: [
@@ -112,21 +122,23 @@ module.exports = {
 				test: /\.scss$/,
 				use:  [
 					process.env.NODE_ENV !== 'production'
-					? 'style-loader'
-					: MiniCssExtractPlugin.loader,
+					?
+					'style-loader'
+					:
+					MiniCssExtractPlugin.loader,
 					{
 						loader:  'css-loader',
 						options: {
 							sourceMap: true
 						}
 					},
-//					{
-//						loader:  'postcss-loader',
-//						options: {
-//							sourceMap: true,
-//							config:    { path: `./postcss.config.js` }
-//						}
-//					},
+					{
+						loader:  'postcss-loader',
+						options: {
+							sourceMap: true,
+							config:    { path: `./postcss.config.js` }
+						}
+					},
 					{
 						loader:  'sass-loader',
 						options: {

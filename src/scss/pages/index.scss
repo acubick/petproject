@@ -1,9 +1,4 @@
-@import "abstracts/variables",
-"abstracts/mixins",
-"abstracts/functions",
-"abstracts/fonts",
-"base/fonts",
-"snippets";
+@import "base";
 
 $color      : #555678;
 $color-text : #25ff24;
@@ -35,4 +30,4 @@ $innert     : 35px;
 	
   }
 }
-@import "layouts/footer";
+@import "../layouts/footer";

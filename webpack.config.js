@@ -13,15 +13,31 @@ const PATHS = {
 	dist:   path.join( __dirname, 'dist' ),
 	assets: 'assets/'
 }
+// TODO: сделать передачу параметра MODE
+console.log( ' process.env.NODE_ENV : >>>>', process.env.NODE_ENV )
+//const MINIFY = {
+//	NODE_ENV !== 'production'
+//	        ?
+//	        false
+//	        :
+//	        {
+//		        collapseWhitespace:            true,
+//		        removeComments:                true,
+//		        removeRedundantAttributes:     true,
+//		        removeScriptTypeAttributes:    true,
+//		        removeStyleLinkTypeAttributes: true
+//	        }
+//}
 
 module.exports = {
 	externals:    {
 		paths: PATHS
 	},
 	entry:        {
-		index:    `${ PATHS.src }/index.js`,
-		snippets: `${ PATHS.src }/snippets.js`,
-		rotate:   `${ PATHS.src }/rotate.js`
+		index:     [ '@babel/polyfill', `${ PATHS.src }/index.js` ],
+		snippets:  [ '@babel/polyfill', `${ PATHS.src }/snippets.js` ],
+		rotate:    [ '@babel/polyfill', `${ PATHS.src }/rotate.js` ],
+		my_jquery: [ '@babel/polyfill', `${ PATHS.src }/my_jquery.js` ]
 	},
 	output:       {
 //    filename: `${PATHS.assets}js/[name].[hash].js`,
@@ -65,6 +81,8 @@ module.exports = {
 			chunks:       [ 'vendor', 'index' ],
 			template:     `${ PATHS.src }/index.html`,
 			filename:     'index.html'
+//			minify:       MINIFY
+			
 		} ),
 		new HtmlWebpackPlugin( {
 			hash:         false,
@@ -82,6 +100,15 @@ module.exports = {
 			template:     `${ PATHS.src }/rotate.html`,
 			chunks:       [ 'vendor', 'rotate' ],
 			filename:     'rotate.html' //relative to root of the application
+//			inject:       true
+		} ),
+		new HtmlWebpackPlugin( {
+			hash:         false,
+			title:        'my rotate page!',
+			myPageHeader: 'Hello Rotate',
+			template:     `${ PATHS.src }/jquery.html`,
+			chunks:       [ 'vendor', 'my_jquery' ],
+			filename:     'jquery.html' //relative to root of the application
 //			inject:       true
 		} ),
 		new MiniCssExtractPlugin( {

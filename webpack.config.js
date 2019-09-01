@@ -15,19 +15,7 @@ const PATHS = {
 }
 // TODO: сделать передачу параметра MODE
 console.log( ' process.env.NODE_ENV : >>>>', process.env.NODE_ENV )
-//const MINIFY = {
-//	NODE_ENV !== 'production'
-//	        ?
-//	        false
-//	        :
-//	        {
-//		        collapseWhitespace:            true,
-//		        removeComments:                true,
-//		        removeRedundantAttributes:     true,
-//		        removeScriptTypeAttributes:    true,
-//		        removeStyleLinkTypeAttributes: true
-//	        }
-//}
+
 
 module.exports = {
 	externals:    {
@@ -37,9 +25,9 @@ module.exports = {
 		index:     [ '@babel/polyfill', `${ PATHS.src }/index.js` ],
 		snippets:  [ '@babel/polyfill', `${ PATHS.src }/snippets.js` ],
 		rotate:    [ '@babel/polyfill', `${ PATHS.src }/rotate.js` ],
-		my_jquery: [ '@babel/polyfill', `${ PATHS.src }/my_jquery.js` ],
 		animation: [ '@babel/polyfill', `${ PATHS.src }/animation.js` ],
-		svg:       [ '@babel/polyfill', `${ PATHS.src }/svg.js` ]
+		svg:       [ '@babel/polyfill', `${ PATHS.src }/svg.js` ],
+		my_jquery: [ '@babel/polyfill', `${ PATHS.src }/my_jquery.js` ]
 	},
 	output:       {
 //    filename: `${PATHS.assets}js/[name].[hash].js`,
@@ -106,15 +94,6 @@ module.exports = {
 		} ),
 		new HtmlWebpackPlugin( {
 			hash:         false,
-			title:        'my jquery page!',
-			myPageHeader: 'Hello jquery',
-			template:     `${ PATHS.src }/jquery.html`,
-			chunks:       [ 'vendor', 'my_jquery' ],
-			filename:     'jquery.html' //relative to root of the application
-//			inject:       true
-		} ),
-		new HtmlWebpackPlugin( {
-			hash:         false,
 			title:        'my animation page!',
 			myPageHeader: 'Hello animation',
 			template:     `${ PATHS.src }/animation.html`,
@@ -129,6 +108,15 @@ module.exports = {
 			template:     `${ PATHS.src }/svg.html`,
 			chunks:       [ 'vendor', 'svg' ],
 			filename:     'svg.html' //relative to root of the application
+//			inject:       true
+		} ),
+		new HtmlWebpackPlugin( {
+			hash:         false,
+			title:        'my jquery page!',
+			myPageHeader: 'Hello jquery',
+			template:     `${ PATHS.src }/jquery.html`,
+			chunks:       [ 'vendor', 'my_jquery' ],
+			filename:     'jquery.html' //relative to root of the application
 //			inject:       true
 		} ),
 		new MiniCssExtractPlugin( {
@@ -189,7 +177,7 @@ module.exports = {
 					{
 						loader:  'sass-loader',
 						options: {
-							sourceMap: true
+//							sourceMap: true
 						}
 					}
 				]

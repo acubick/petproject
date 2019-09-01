@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import './css/jquery.css'
 import './scss/pages/jquery.scss'
 import Attribute from 'less/lib/less/tree/attribute'
 

@@ -37,7 +37,9 @@ module.exports = {
 		index:     [ '@babel/polyfill', `${ PATHS.src }/index.js` ],
 		snippets:  [ '@babel/polyfill', `${ PATHS.src }/snippets.js` ],
 		rotate:    [ '@babel/polyfill', `${ PATHS.src }/rotate.js` ],
-		my_jquery: [ '@babel/polyfill', `${ PATHS.src }/my_jquery.js` ]
+		my_jquery: [ '@babel/polyfill', `${ PATHS.src }/my_jquery.js` ],
+		animation: [ '@babel/polyfill', `${ PATHS.src }/animation.js` ],
+		svg:       [ '@babel/polyfill', `${ PATHS.src }/svg.js` ]
 	},
 	output:       {
 //    filename: `${PATHS.assets}js/[name].[hash].js`,
@@ -82,7 +84,7 @@ module.exports = {
 			template:     `${ PATHS.src }/index.html`,
 			filename:     'index.html'
 //			minify:       MINIFY
-			
+
 		} ),
 		new HtmlWebpackPlugin( {
 			hash:         false,
@@ -104,11 +106,29 @@ module.exports = {
 		} ),
 		new HtmlWebpackPlugin( {
 			hash:         false,
-			title:        'my rotate page!',
-			myPageHeader: 'Hello Rotate',
+			title:        'my jquery page!',
+			myPageHeader: 'Hello jquery',
 			template:     `${ PATHS.src }/jquery.html`,
 			chunks:       [ 'vendor', 'my_jquery' ],
 			filename:     'jquery.html' //relative to root of the application
+//			inject:       true
+		} ),
+		new HtmlWebpackPlugin( {
+			hash:         false,
+			title:        'my animation page!',
+			myPageHeader: 'Hello animation',
+			template:     `${ PATHS.src }/animation.html`,
+			chunks:       [ 'vendor', 'animation' ],
+			filename:     'animation.html' //relative to root of the application
+//			inject:       true
+		} ),
+		new HtmlWebpackPlugin( {
+			hash:         false,
+			title:        'my svg page!',
+			myPageHeader: 'Hello svg',
+			template:     `${ PATHS.src }/svg.html`,
+			chunks:       [ 'vendor', 'svg' ],
+			filename:     'svg.html' //relative to root of the application
 //			inject:       true
 		} ),
 		new MiniCssExtractPlugin( {
@@ -148,11 +168,11 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				use:  [
-					process.env.NODE_ENV !== 'production'
-					?
-					'style-loader'
-					:
-					MiniCssExtractPlugin.loader,
+//					process.env.NODE_ENV !== 'production'
+//					?
+					'style-loader',
+//					:
+//					MiniCssExtractPlugin.loader,
 					{
 						loader:  'css-loader',
 						options: {
